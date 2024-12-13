@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contrato de Amizade ou Namoro</title>
+    <style>
+        :root {
+            --primary-color: #4a90e2;
+            --secondary-color: #f39c12;
+            --background-color: #f0f4f8;
+            --text-color: #333;
+            --accent-color: #e74c3c;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: var(--background-color);
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        h1, h2 {
+            text-align: center;
+            color: var(--primary-color);
+            margin-bottom: 30px;
+        }
+
+        form {
+            display: grid;
+            gap: 20px;
+            grid-template-columns: 1fr 1fr;
+        }
+
+        .full-width {
+            grid-column: 1 / -1;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+
+        button {
+            background-color: var(--primary-color);
+            color: #fff;
+            padding: 12px;
+            border: none;
+            border-radius: 4px;
+            font-size: 18px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #3a7bd5;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.4);
+        }
+
+        .modal-content {
+            background-color: #fefefe;
+            margin: 5% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 90%;
+            max-width: 800px;
+            border-radius: 8px;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: #000;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        #contract-text {
+            white-space: pre-wrap;
+            line-height: 1.8;
+            background-color: #f9f9f9;
+            padding: 20px;
+            border-radius: 8px;
+            border: 1px solid #ddd;
+        }
+
+        .compatibility {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #e8f5e9;
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        .compatibility h3 {
+            color: var(--accent-color);
+            margin-bottom: 10px;
+        }
+
+        .terms {
+            margin-top: 20px;
+            font-size: 14px;
+            color: #666;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px;
+            }
+            form {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Contrato de Amizade ou Namoro</h1>
+        <form id="contract-form">
+            <div>
+                <label for="fullName">Seu Nome Completo:</label>
+                <input type="text" id="fullName" required>
+            </div>
+
+            <div>
+                <label for="age">Sua Idade:</label>
+                <input type="number" id="age" required min="13">
+            </div>
+
+            <div>
+                <label for="zodiacSign">Seu Signo:</label>
+                <select id="zodiacSign" required>
+                    <option value="">Selecione seu signo</option>
+                    <option value="Áries">Áries</option>
+                    <option value="Touro">Touro</option>
+                    <option value="Gêmeos">Gêmeos</option>
+                    <option value="Câncer">Câncer</option>
+                    <option value="Leão">Leão</option>
+                    <option value="Virgem">Virgem</option>
+                    <option value="Libra">Libra</option>
+                    <option value="Escorpião">Escorpião</option>
+                    <option value="Sagitário">Sagitário</option>
+                    <option value="Capricórnio">Capricórnio</option>
+                    <option value="Aquário">Aquário</option>
+                    <option value="Peixes">Peixes</option>
+                </select>
+            </div>
+
+            <div>
+                <label for="contractType">Tipo de Contrato:</label>
+                <select id="contractType" required>
+                    <option value="">Selecione o tipo de contrato</option>
+                    <option value="Amizade">Amizade</option>
+                    <option value="Namoro">Namoro</option>
+                </select>
+            </div>
+
+            <div>
+                <label for="otherPerson">Nome da Outra Pessoa:</label>
+                <input type="text" id="otherPerson" required>
+            </div>
+
+            <div>
+                <label for="otherAge">Idade da Outra Pessoa:</label>
+                <input type="number" id="otherAge" required min="13">
+            </div>
+
+            <div>
+                <label for="otherZodiacSign">Signo da Outra Pessoa:</label>
+                <select id="otherZodiacSign" required>
+                    <option value="">Selecione o signo</option>
+                    <option value="Áries">Áries</option>
+                    <option value="Touro">Touro</option>
+                    <option value="Gêmeos">Gêmeos</option>
+                    <option value="Câncer">Câncer</option>
+                    <option value="Leão">Leão</option>
+                    <option value="Virgem">Virgem</option>
+                    <option value="Libra">Libra</option>
+                    <option value="Escorpião">Escorpião</option>
+                    <option value="Sagitário">Sagitário</option>
+                    <option value="Capricórnio">Capricórnio</option>
+                    <option value="Aquário">Aquário</option>
+                    <option value="Peixes">Peixes</option>
+                </select>
+            </div>
+
+            <div>
+                <label for="endDate">Data de Término do Contrato:</label>
+                <input type="date" id="endDate" required>
+            </div>
+
+            <div class="full-width">
+                <button type="submit">Gerar Contrato</button>
+            </div>
+        </form>
+    </div>
+
+    <div id="contractModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Contrato Gerado</h2>
+            <div id="contract-text"></div>
+            <div class="compatibility">
+                <h3>Análise de Compatibilidade</h3>
+                <p id="compatibility-text"></p>
+            </div>
+            <div class="terms">
+                <p>Ao aceitar este contrato, ambas as partes concordam em respeitar os termos estabelecidos e se comprometem a manter uma relação saudável e respeitosa. Este contrato é simbólico e não tem validade legal.</p>
+                <button id="acceptContract">Aceitar Contrato</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const form = document.getElementById('contract-form');
+        const modal = document.getElementById('contractModal');
+        const closeBtn = document.getElementsByClassName('close')[0];
+        const contractText = document.getElementById('contract-text');
+        const compatibilityText = document.getElementById('compatibility-text');
+        const acceptContractBtn = document.getElementById('acceptContract');
+
+        form.addEventListener('submit', function(e) {
+            e.preventDefault();
+            generateContract();
+        });
+
+        closeBtn.onclick = function() {
+            modal.style.display = "none";
+        }
+
+        window.onclick = function(event) {
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+        }
+
+        acceptContractBtn.onclick = function() {
+            alert("Parabéns! Você aceitou o contrato. Lembre-se de que este é um acordo simbólico e o mais importante é manter uma relação saudável e respeitosa.");
+            modal.style.display = "none";
+        }
+
+        function generateContract() {
+            const fullName = document.getElementById('fullName').value;
+            const age = document.getElementById('age').value;
+            const zodiacSign = document.getElementById('zodiacSign').value;
+            const contractType = document.getElementById('contractType').value;
+            const otherPerson = document.getElementById('otherPerson').value;
+            const otherAge = document.getElementById('otherAge').value;
+            const otherZodiacSign = document.getElementById('otherZodiacSign').value;
+            const endDate = new Date(document.getElementById('endDate').value);
+
+            const formattedEndDate = endDate.toLocaleDateString('pt-BR', {
+                day: '2-digit',
+                month: '2-digit',
+                year: 'numeric'
+            });
+
+            const contractContent = `CONTRATO DE ${contractType.toUpperCase()}
+
+Data: ${new Date().toLocaleDateString('pt-BR')}
+
+Entre:
+${fullName}, ${age} anos, do signo de ${zodiacSign}
+e
+${otherPerson}, ${otherAge} anos, do signo de ${otherZodiacSign}
+
+1. OBJETO DO CONTRATO
+
+Este contrato estabelece os termos e condições da ${contractType.toLowerCase()} entre as partes acima mencionadas.
+
+2. DURAÇÃO
+
+Este contrato terá validade a partir da data de assinatura até ${formattedEndDate}.
+
+3. COMPROMISSOS
+
+As partes se comprometem a:
+- Manter respeito mútuo
+- Comunicar-se de forma honesta e aberta
+- Apoiar um ao outro em momentos difíceis
+${contractType === 'Namoro' ? '- Manter fidelidade\n- Demonstrar afeto e carinho\n- Planejar momentos especiais juntos' : '- Estar presente nos momentos importantes\n- Manter contato regular\n- Respeitar a privacidade um do outro'}
+
+4. RESOLUÇÃO DE CONFLITOS
+
+Em caso de desentendimentos, as partes concordam em:
+- Dialogar de forma calma e respeitosa
+- Ouvir atentamente o ponto de vista do outro
+- Buscar soluções em conjunto
+${contractType === 'Namoro' ? '- Se necessário, tirar um tempo para reflexão individual' : '- Dar espaço quando necessário'}
+
+5. TÉRMINO DO CONTRATO
+
+Ao término do contrato, as partes podem optar por:
+- Renovar o contrato
+- Renegociar os termos
+- Encerrar a ${contractType.toLowerCase()} de forma amigável
+
+6. ASSINATURAS
+
+____________________
+${fullName}
+
+____________________
+${otherPerson}
+
+Este contrato é simbólico e não tem validade legal. Seu propósito é fortalecer o compromisso entre as partes e promover uma relação saudável.`;
+
+            contractText.textContent = contractContent;
+            
+            // Análise de compatibilidade
+            const compatibility = analyzeCompatibility(zodiacSign, otherZodiacSign, contractType);
+            compatibilityText.textContent = compatibility;
+
+            modal.style.display = "block";
+        }
+
+        function analyzeCompatibility(sign1, sign2, contractType) {
+            const compatibilityMap = {
+                'Áries': ['Leão', 'Sagitário', 'Gêmeos', 'Aquário'],
+                'Touro': ['Virgem', 'Capricórnio', 'Câncer', 'Peixes'],
+                'Gêmeos': ['Libra', 'Aquário', 'Áries', 'Leão'],
+                'Câncer': ['Escorpião', 'Peixes', 'Touro', 'Virgem'],
+                'Leão': ['Áries', 'Sagitário', 'Gêmeos', 'Libra'],
+                'Virgem': ['Touro', 'Capricórnio', 'Câncer', 'Escorpião'],
+                'Libra': ['Gêmeos', 'Aquário', 'Leão', 'Sagitário'],
+                'Escorpião': ['Câncer', 'Peixes', 'Virgem', 'Capricórnio'],
+                'Sagitário': ['Áries', 'Leão', 'Libra', 'Aquário'],
+                'Capricórnio': ['Touro', 'Virgem', 'Escorpião', 'Peixes'],
+                'Aquário': ['Gêmeos', 'Libra', 'Áries', 'Sagitário'],
+                'Peixes': ['Câncer', 'Escorpião', 'Touro', 'Capricórnio']
+            };
+
+            if (compatibilityMap[sign1].includes(sign2)) {
+                return `Ótima compatibilidade! ${sign1} e ${sign2} tendem a ter uma ${contractType.toLowerCase()} harmoniosa e cheia de entendimento mútuo.`;
+            } else if (sign1 === sign2) {
+                return `Boa compatibilidade! Como ambos são do signo de ${sign1}, vocês compartilham muitas características em comum, o que pode fortalecer a ${contractType.toLowerCase()}.`;
+            } else {
+                return `Compatibilidade desafiadora, mas com potencial! ${sign1} e ${sign2} podem aprender muito um com o outro, tornando a ${contractType.toLowerCase()} uma experiência enriquecedora. Com comunicação aberta e respeito mútuo, vocês podem superar quaisquer diferenças.`;
+            }
+        }
+    </script>
+</body>
+</html>
