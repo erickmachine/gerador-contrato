@@ -3,77 +3,133 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Contrato de Amizade ou Namoro</title>
+    <title>Gerador de Contrato de Amor e Amizade</title>
     <style>
         :root {
-            --primary-color: #4a90e2;
-            --secondary-color: #f39c12;
-            --background-color: #f0f4f8;
+            --primary-color: #8a2be2;
+            --secondary-color: #ff69b4;
+            --background-color: #f0e6ff;
             --text-color: #333;
-            --accent-color: #e74c3c;
+            --card-bg-color: rgba(255, 255, 255, 0.8);
         }
 
         body {
             font-family: 'Arial', sans-serif;
-            line-height: 1.6;
+            background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+            background-size: 400% 400%;
+            animation: gradient 15s ease infinite;
             color: var(--text-color);
-            background-color: var(--background-color);
+            line-height: 1.6;
             margin: 0;
             padding: 20px;
+            min-height: 100vh;
+            transition: all 0.5s ease;
+        }
+
+        @keyframes gradient {
+            0% {
+                background-position: 0% 50%;
+            }
+            50% {
+                background-position: 100% 50%;
+            }
+            100% {
+                background-position: 0% 50%;
+            }
         }
 
         .container {
             max-width: 800px;
             margin: 0 auto;
-            background-color: #fff;
+            background-color: var(--card-bg-color);
             padding: 30px;
-            border-radius: 8px;
+            border-radius: 10px;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
         }
 
-        h1, h2 {
+        .container:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .container::before,
+        .container::after {
+            content: "❤️";
+            font-size: 100px;
+            position: absolute;
+            opacity: 0.1;
+            animation: pulse 2s infinite;
+        }
+
+        .container::before {
+            top: -50px;
+            left: -50px;
+        }
+
+        .container::after {
+            bottom: -50px;
+            right: -50px;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        h1 {
             text-align: center;
             color: var(--primary-color);
             margin-bottom: 30px;
+            font-size: 2.5em;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
         }
 
         form {
             display: grid;
             gap: 20px;
-            grid-template-columns: 1fr 1fr;
-        }
-
-        .full-width {
-            grid-column: 1 / -1;
         }
 
         label {
-            display: block;
-            margin-bottom: 5px;
             font-weight: bold;
+            margin-bottom: 5px;
+            display: block;
+            color: var(--primary-color);
         }
 
         input, select {
             width: 100%;
             padding: 10px;
-            border: 1px solid #ddd;
-            border-radius: 4px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
             font-size: 16px;
+            transition: all 0.3s ease;
+        }
+
+        input:focus, select:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 2px rgba(138, 43, 226, 0.2);
         }
 
         button {
             background-color: var(--primary-color);
-            color: #fff;
+            color: white;
             padding: 12px;
             border: none;
-            border-radius: 4px;
+            border-radius: 5px;
             font-size: 18px;
             cursor: pointer;
-            transition: background-color 0.3s ease;
+            transition: all 0.3s ease;
         }
 
         button:hover {
-            background-color: #3a7bd5;
+            background-color: #6a1b9a;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
         }
 
         .modal {
@@ -85,18 +141,32 @@
             width: 100%;
             height: 100%;
             background-color: rgba(0,0,0,0.4);
+            backdrop-filter: blur(5px);
         }
 
         .modal-content {
-            background-color: #fefefe;
+            background-color: var(--card-bg-color);
             margin: 5% auto;
             padding: 20px;
             border: 1px solid #888;
             width: 90%;
             max-width: 800px;
-            border-radius: 8px;
+            border-radius: 10px;
             max-height: 80vh;
             overflow-y: auto;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            animation: modalAppear 0.5s ease;
+        }
+
+        @keyframes modalAppear {
+            from {
+                opacity: 0;
+                transform: translateY(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
         .close {
@@ -105,41 +175,176 @@
             font-size: 28px;
             font-weight: bold;
             cursor: pointer;
+            transition: all 0.3s ease;
         }
 
         .close:hover,
         .close:focus {
             color: #000;
             text-decoration: none;
-            cursor: pointer;
         }
 
         #contract-text {
             white-space: pre-wrap;
-            line-height: 1.8;
-            background-color: #f9f9f9;
+            background-color: rgba(249, 249, 249, 0.8);
             padding: 20px;
-            border-radius: 8px;
+            border-radius: 5px;
             border: 1px solid #ddd;
+            margin-bottom: 20px;
+            font-family: 'Courier New', Courier, monospace;
         }
 
         .compatibility {
             margin-top: 20px;
             padding: 15px;
-            background-color: #e8f5e9;
-            border-radius: 8px;
-            text-align: center;
+            background-color: rgba(232, 245, 233, 0.8);
+            border-radius: 5px;
+            transition: all 0.3s ease;
         }
 
-        .compatibility h3 {
-            color: var(--accent-color);
-            margin-bottom: 10px;
+        .compatibility:hover {
+            transform: scale(1.02);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
         }
 
-        .terms {
-            margin-top: 20px;
-            font-size: 14px;
-            color: #666;
+        #theme-toggle {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            font-size: 24px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            z-index: 1000;
+        }
+
+        #theme-toggle:hover {
+            transform: rotate(180deg);
+        }
+
+        .dark-mode {
+            --primary-color: #bb86fc;
+            --secondary-color: #ff79c6;
+            --background-color: #121212;
+            --text-color: #e0e0e0;
+            --card-bg-color: rgba(30, 30, 30, 0.8);
+        }
+
+        .dark-mode body {
+            background: linear-gradient(-45deg, #2c3e50, #4a569d, #24243e, #0f0c29);
+            background-size: 400% 400%;
+            animation: gradient 15s ease infinite;
+        }
+
+        .decorative-elements {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .heart, .star, .circle, .square {
+            position: absolute;
+            opacity: 0.1;
+            animation: float 20s infinite ease-in-out;
+        }
+
+        .heart {
+            top: 10%;
+            left: 10%;
+            width: 50px;
+            height: 50px;
+            background-color: var(--secondary-color);
+            transform: rotate(-45deg);
+        }
+
+        .heart:before,
+        .heart:after {
+            content: "";
+            width: 50px;
+            height: 50px;
+            background-color: var(--secondary-color);
+            border-radius: 50%;
+            position: absolute;
+        }
+
+        .heart:before {
+            top: -25px;
+            left: 0;
+        }
+
+        .heart:after {
+            top: 0;
+            left: 25px;
+        }
+
+        .star {
+            top: 20%;
+            right: 15%;
+            width: 0;
+            height: 0;
+            border-left: 25px solid transparent;
+            border-right: 25px solid transparent;
+            border-bottom: 50px solid var(--primary-color);
+            transform: rotate(35deg);
+        }
+
+        .circle {
+            bottom: 15%;
+            left: 20%;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            border: 5px solid var(--primary-color);
+        }
+
+        .square {
+            bottom: 25%;
+            right: 10%;
+            width: 40px;
+            height: 40px;
+            border: 5px solid var(--secondary-color);
+            transform: rotate(45deg);
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotate(0); }
+            50% { transform: translateY(-20px) rotate(5deg); }
+        }
+
+        .floating-elements {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1000;
+        }
+
+        .floating-elements span {
+            position: absolute;
+            font-size: 24px;
+            animation: floatEmoji 15s infinite ease-in-out;
+        }
+
+        .floating-elements span:nth-child(1) { top: 15%; left: 10%; animation-delay: 0s; }
+        .floating-elements span:nth-child(2) { top: 25%; right: 20%; animation-delay: 2s; }
+        .floating-elements span:nth-child(3) { bottom: 20%; left: 15%; animation-delay: 4s; }
+        .floating-elements span:nth-child(4) { bottom: 10%; right: 10%; animation-delay: 6s; }
+        .floating-elements span:nth-child(5) { top: 50%; left: 50%; animation-delay: 8s; }
+
+        @keyframes floatEmoji {
+            0%, 100% { transform: translateY(0) rotate(0); }
+            50% { transform: translateY(-30px) rotate(15deg); }
         }
 
         @media (max-width: 768px) {
@@ -154,18 +359,16 @@
 </head>
 <body>
     <div class="container">
-        <h1>Contrato de Amizade ou Namoro</h1>
+        <h1>Gerador de Contrato de Amor e Amizade</h1>
         <form id="contract-form">
             <div>
                 <label for="fullName">Seu Nome Completo:</label>
                 <input type="text" id="fullName" required>
             </div>
-
             <div>
                 <label for="age">Sua Idade:</label>
                 <input type="number" id="age" required min="13">
             </div>
-
             <div>
                 <label for="zodiacSign">Seu Signo:</label>
                 <select id="zodiacSign" required>
@@ -184,7 +387,6 @@
                     <option value="Peixes">Peixes</option>
                 </select>
             </div>
-
             <div>
                 <label for="contractType">Tipo de Contrato:</label>
                 <select id="contractType" required>
@@ -193,17 +395,14 @@
                     <option value="Namoro">Namoro</option>
                 </select>
             </div>
-
             <div>
                 <label for="otherPerson">Nome da Outra Pessoa:</label>
                 <input type="text" id="otherPerson" required>
             </div>
-
             <div>
                 <label for="otherAge">Idade da Outra Pessoa:</label>
                 <input type="number" id="otherAge" required min="13">
             </div>
-
             <div>
                 <label for="otherZodiacSign">Signo da Outra Pessoa:</label>
                 <select id="otherZodiacSign" required>
@@ -222,15 +421,11 @@
                     <option value="Peixes">Peixes</option>
                 </select>
             </div>
-
             <div>
                 <label for="endDate">Data de Término do Contrato:</label>
                 <input type="date" id="endDate" required>
             </div>
-
-            <div class="full-width">
-                <button type="submit">Gerar Contrato</button>
-            </div>
+            <button type="submit">Gerar Contrato</button>
         </form>
     </div>
 
@@ -243,13 +438,28 @@
                 <h3>Análise de Compatibilidade</h3>
                 <p id="compatibility-text"></p>
             </div>
-            <div class="terms">
-                <p>Ao aceitar este contrato, ambas as partes concordam em respeitar os termos estabelecidos e se comprometem a manter uma relação saudável e respeitosa. Este contrato é simbólico e não tem validade legal.</p>
-                <button id="acceptContract">Aceitar Contrato</button>
-            </div>
+            <button id="acceptContract">Aceitar Contrato</button>
         </div>
     </div>
 
+    <button id="theme-toggle">🌓</button>
+
+    <div class="decorative-elements">
+        <div class="heart"></div>
+        <div class="star"></div>
+        <div class="circle"></div>
+        <div class="square"></div>
+    </div>
+
+    <div class="floating-elements">
+        <span>❤️</span>
+        <span>🤝</span>
+        <span>🔎</span>
+        <span>📃</span>
+        <span>🌈</span>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
     <script>
         const form = document.getElementById('contract-form');
         const modal = document.getElementById('contractModal');
@@ -257,6 +467,7 @@
         const contractText = document.getElementById('contract-text');
         const compatibilityText = document.getElementById('compatibility-text');
         const acceptContractBtn = document.getElementById('acceptContract');
+        const themeToggle = document.getElementById('theme-toggle');
 
         form.addEventListener('submit', function(e) {
             e.preventDefault();
@@ -274,8 +485,21 @@
         }
 
         acceptContractBtn.onclick = function() {
+            confetti({
+                particleCount: 100,
+                spread: 70,
+                origin: { y: 0.6 }
+            });
             alert("Parabéns! Você aceitou o contrato. Lembre-se de que este é um acordo simbólico e o mais importante é manter uma relação saudável e respeitosa.");
-            modal.style.display = "none";
+        }
+
+        themeToggle.onclick = function() {
+            document.body.classList.toggle('dark-mode');
+            if (document.body.classList.contains('dark-mode')) {
+                themeToggle.textContent = '☀️';
+            } else {
+                themeToggle.textContent = '🌙';
+            }
         }
 
         function generateContract() {
@@ -346,7 +570,6 @@ Este contrato é simbólico e não tem validade legal. Seu propósito é fortale
 
             contractText.textContent = contractContent;
             
-            // Análise de compatibilidade
             const compatibility = analyzeCompatibility(zodiacSign, otherZodiacSign, contractType);
             compatibilityText.textContent = compatibility;
 
